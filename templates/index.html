@@ -1,1 +1,60 @@
 # Perdor Line Chart nga libraria e Google Charts
+
+<html>
+	<head>
+		<title>Line Chart</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+		<script type="text/javascript">
+			 google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var url = 'ferizaj/monthly-summary/2013';
+
+      $.get(url, function(jsonResult){
+
+	      var data = new google.visualization.DataTable();
+	      data.addColumn('number', 'Muaji');
+	      data.addColumn('number', 'Vlera');
+	      data.addColumn('number', 'Cmimi');
+
+	      data.addRows([
+	        [jsonResult[0]['muaji'], jsonResult[0]['vlera'], jsonResult[0]['qmimi']],
+	        [jsonResult[1]['muaji'], jsonResult[1]['vlera'], jsonResult[1]['qmimi']],
+	        [jsonResult[2]['muaji'], jsonResult[2]['vlera'], jsonResult[2]['qmimi']],
+	        [jsonResult[3]['muaji'], jsonResult[3]['vlera'], jsonResult[3]['qmimi']],
+	        [jsonResult[4]['muaji'], jsonResult[4]['vlera'], jsonResult[4]['qmimi']],
+	        [jsonResult[5]['muaji'], jsonResult[5]['vlera'], jsonResult[5]['qmimi']],
+	        [jsonResult[6]['muaji'], jsonResult[6]['vlera'], jsonResult[6]['qmimi']],
+	        [jsonResult[7]['muaji'], jsonResult[7]['vlera'], jsonResult[7]['qmimi']],
+	        [jsonResult[8]['muaji'], jsonResult[8]['vlera'], jsonResult[8]['qmimi']],
+	        [jsonResult[9]['muaji'], jsonResult[9]['vlera'], jsonResult[9]['qmimi']],
+	        [jsonResult[10]['muaji'], jsonResult[10]['vlera'], jsonResult[10]['qmimi']],
+	        [jsonResult[11]['muaji'], jsonResult[11]['vlera'], jsonResult[11]['qmimi']]
+
+	      ]);
+
+	      var options = {
+	        width: 1000,
+	        height: 563,
+	        hAxis: {
+	          title: 'Muaji'
+	        },
+	        vAxis: {
+	          title: 'Vlera'
+	        }
+	      };
+
+	      var chart = new google.visualization.LineChart(
+	        document.getElementById('lineChart'));
+
+	      chart.draw(data, options);
+	  })
+    }
+		</script>
+	</head>
+	<body>
+		<div id="lineChart">
+	</body>
+</html>
