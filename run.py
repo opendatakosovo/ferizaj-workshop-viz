@@ -8,35 +8,32 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Add municipality in the Url'
+    return 'Shiko kodin dhe ndjek instruksionet'
 
 
 @app.route('/<string:komuna>')
 def index(komuna):
+    #Kur te navigojme ne /ferizaj duhet te na shfaqet Line Chart
     return render_template('index.html')
 
 
 @app.route('/piechart')
 def piechart():
-    url = "http://0.0.0.0:5030/prokurimi"
+    #TODO: Kthe render_template ne piechart.html dhe kthe rezultatin
+    #Kerkesa duhet te behet ne API dhe te kthehet rezultati si JSON
+    #Per kete eshte importuar libraria json dhe te perdoret metoda json.loads(rezultati)
+    #para se te kthehet rezultati si parameter
 
-    result = urlopen(url).read()
-    json_result = json.loads(result)
-
-    return render_template('piechart.html', result=json_result)
+    return "Rendero template dhe kthe nje variabel result"
 
 
 @app.route('/<string:komuna>/monthly-summary/<int:viti>')
 def merr_json(komuna, viti):
-    url = "http://0.0.0.0:5030/%s/monthly-summary/%d" % (komuna, viti)
+    #TODO: kthe nje Response te tipit application/json duke bere kerkese
+    # ne API
 
-    result = urlopen(url).read()
-
-    resp = Response(
-        response=result, mimetype='application/json')
-
-    return resp
+    return "TODO"
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
