@@ -19,20 +19,31 @@ def index(komuna):
 
 @app.route('/piechart')
 def piechart():
+
+    url = "http://0.0.0.0:5030/prokurimi"
+
+    rezultati = urlopen(url).read()
+
+    result_json = json.loads(rezultati)
     #TODO: Kthe render_template ne piechart.html dhe kthe rezultatin
     #Kerkesa duhet te behet ne API dhe te kthehet rezultati si JSON
     #Per kete eshte importuar libraria json dhe te perdoret metoda json.loads(rezultati)
     #para se te kthehet rezultati si parameter
 
-    return "Rendero template dhe kthe nje variabel result"
+    return render_template('piechart.html', result=result_json)
 
 
 @app.route('/<string:komuna>/monthly-summary/<int:viti>')
 def merr_json(komuna, viti):
     #TODO: kthe nje Response te tipit application/json duke bere kerkese
     # ne API
+    url = "http://0.0.0.0:5030/%s/monthly-summary/%d" % (komuna, viti)
 
-    return "TODO"
+    result = urlopen(url).read()
+
+    resp = Response(
+        response=result, mimetype='application/json')
+    return resp
 
 
 if __name__ == '__main__':
