@@ -1,18 +1,30 @@
 from flask import Flask
 from flask import render_template, Response
+import json
 from urllib2 import urlopen
 
-# Create the flask app.
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-	return 'Add municipality in the Url'
+    return 'Add municipality in the Url'
+
 
 @app.route('/<string:komuna>')
 def index(komuna):
-	return render_template('index.html')
+    return render_template('index.html')
+
+
+@app.route('/piechart')
+def piechart():
+    url = "http://0.0.0.0:5030/prokurimi"
+
+    result = urlopen(url).read()
+    json_result = json.loads(result)
+
+    return render_template('piechart.html', result=json_result)
+
 
 @app.route('/<string:komuna>/monthly-summary/<int:viti>')
 def merr_json(komuna, viti):
@@ -20,12 +32,11 @@ def merr_json(komuna, viti):
 
     result = urlopen(url).read()
 
-    # Build response object.
     resp = Response(
         response=result, mimetype='application/json')
 
-    # Return response.
     return resp
-# Run the app
+
+
 if __name__ == '__main__':
     app.run(debug=True)
